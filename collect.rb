@@ -13,7 +13,7 @@ files = {}
 # Collect all stat info from directory
 puts "Scanning files in #{dir}, logging to #{log}"
 
-file_tree = Dir["#{dir}/**/*"]
+file_tree = Dir["#{dir}/**/*.*"]
 file_tree.each do |file|
   files[file] = {}
   files[file]['last_access'] = File.stat(file).atime
