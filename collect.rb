@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'YAML'
+require 'yaml'
 
 # Vars
 dir = ARGV.first
