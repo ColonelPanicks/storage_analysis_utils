@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+require 'YAML'
+
 # Vars
 dir = ARGV.first
 log = "collection/#{dir.gsub('/', '')}_#{Time.new.strftime("%Y-%m-%d")}"
@@ -20,6 +22,6 @@ file_tree.each do |file|
   files[file]['size'] = File.stat(file).size
 
   # Write out data (so can rerun on larged filesystems if needs be...)
-  File.write(log, files)
+  File.write(log, files.to_yaml)
 end
 
