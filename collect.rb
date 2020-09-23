@@ -25,3 +25,5 @@ file_tree.each do |file|
   File.write(log, files.to_yaml)
 end
 
+puts "Collected info on #{file_tree.length} files"
+
