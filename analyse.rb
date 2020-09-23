@@ -16,6 +16,20 @@ months24plus = {}
 
 # Validation
 
+# Functions
+
+## Human readable sizes (https://codereview.stackexchange.com/questions/9107/printing-human-readable-number-of-bytes)
+PREFIX = %W(TiB GiB MiB KiB B).freeze
+
+def human_readable( s )
+  s = s.to_f
+  i = PREFIX.length - 1
+  while s > 512 && i > 0
+    i -= 1
+    s /= 1024
+  end
+  ((s > 9 || s.modulo(1) < 0.1 ? '%d' : '%.1f') % s) + ' ' + PREFIX[i]
+end
 
 # Analyse data from log file
 files = YAML.load_file(log)
@@ -53,10 +67,10 @@ puts
 puts "## Overview"
 puts "Our storage analysis has checked #{files.length} files and identified old/unused files that can be archived to save storage space:"
 puts
-puts "- #{months3to6.length} files that haven't been accessed in 3 to 6 months, totalling #{months3size.sum} bytes"
-puts "- #{months6to12.length} files that haven't been accessed in 6 to 12 months, totalling #{months6size.sum} bytes"
-puts "- #{months12to24.length} files that haven't been accessed in 12 to 24 months, totalling #{months12size.sum} bytes"
-puts "- #{months24plus.length} files that haven't been accessed in more than 24 months, totalling #{months24size.sum} bytes"
+puts "- #{months3to6.length} files that haven't been accessed in 3 to 6 months, totalling #{human_readable(months3size.sum)}"
+puts "- #{months6to12.length} files that haven't been accessed in 6 to 12 months, totalling #{human_readable(months6size.sum)}"
+puts "- #{months12to24.length} files that haven't been accessed in 12 to 24 months, totalling #{human_readable(months12size.sum)}"
+puts "- #{months24plus.length} files that haven't been accessed in more than 24 months, totalling #{human_readable(months24size.sum)}"
 puts
 
 puts "## Details"
