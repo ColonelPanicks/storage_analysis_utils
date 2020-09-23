@@ -21,8 +21,6 @@ months24plus = {}
 files = YAML.load_file(log)
 puts "Analysing #{files.length} files"
 files.each do |file, info|
-  puts file
-
   # Short UTC var for last access time
   la = info['last_access'].utc
 
@@ -34,16 +32,12 @@ files.each do |file, info|
   quarteryear = Time.now.utc - (91*24*60*60)
 
   if la < twoyears then
-    puts "Adding #{file} (2 year)"
     months24plus[file] = info
   elsif la < oneyear then
-    puts "Adding #{file} (1 year)"
     months12to24[file] = info
   elsif la < halfyear then
-    puts "Adding #{file} (6 months)"
     months6to12[file] = info
   elsif la < quarteryear then
-    puts "Adding #{file} (3 months)"
     months3to6[file] = info
   end
 end
